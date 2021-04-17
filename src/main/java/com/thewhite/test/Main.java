@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class Main {
@@ -19,9 +20,15 @@ public class Main {
         var srcFile = new File(srcPath);
         var destFile = new File(destPath);
 
+        if (!srcFile.exists()) {
+            System.err.println("Wrong src: %s".formatted(srcFile.getAbsolutePath()));
+            System.exit(0);
+        }
+
         if (!destFile.exists()) Files.createDirectories(destFile.toPath());
-        File destZip = new File(destFile.getAbsolutePath() + "/" + zipName);
+        File destZip = Paths.get(destFile.getAbsolutePath(), zipName).toFile();
 
         new Worker(srcFile, destZip).run();
+        System.out.println("Path to Utrom's secrets.zip: %s".formatted(destFile.getAbsolutePath()));
     }
 }
