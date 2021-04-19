@@ -11,8 +11,7 @@ public class Util {
 
     private static final Pattern uuidPattern = Pattern.compile(" [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
 
-    public static String getNameWithoutUUID(File file) {
-        var name = file.getName();
+    public static String getNameWithoutUUID(String name) {
         var matcher = uuidPattern.matcher(name);
         if (!matcher.find()) return name;
 
@@ -25,7 +24,7 @@ public class Util {
         boolean result = true;
 
         try (BufferedReader firstReader = new BufferedReader(new FileReader(first));
-             BufferedReader secondReader = new BufferedReader(new FileReader(second));) {
+             BufferedReader secondReader = new BufferedReader(new FileReader(second))) {
 
             int char1;
             int char2;
