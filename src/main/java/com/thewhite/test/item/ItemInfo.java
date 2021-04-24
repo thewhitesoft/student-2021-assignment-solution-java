@@ -1,8 +1,21 @@
 package com.thewhite.test.item;
 
-public interface ItemInfo {
+import com.thewhite.test.util.Util;
+import lombok.Getter;
+import lombok.Setter;
 
-    String getName();
+@Getter
+public abstract class ItemInfo {
 
-    void setResultName(String resultName);
+    protected final String name;
+    protected final String basename;
+    protected final String extension;
+    @Setter
+    protected String resultName;
+
+    public ItemInfo(String name) {
+        this.name = Util.getNameWithoutUUID(name);
+        this.basename = Util.getBasename(this.name);
+        this.extension = Util.getExtension(this.name);
+    }
 }

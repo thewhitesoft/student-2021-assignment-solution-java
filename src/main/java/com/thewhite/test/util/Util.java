@@ -38,4 +38,14 @@ public class Util {
         }
         return result;
     }
+
+    public static String getBasename(String name) {
+        int indexExtensionSeparator = name.indexOf('.');
+        return indexExtensionSeparator < 0 ? name : name.substring(0, indexExtensionSeparator);
+    }
+
+    public static String getExtension(String name) {
+        int indexExtensionSeparator = name.indexOf('.');
+        return indexExtensionSeparator < 0 ? "" : name.substring(indexExtensionSeparator);
+    }
 }

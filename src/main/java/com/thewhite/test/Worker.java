@@ -68,7 +68,10 @@ public class Worker {
     private void determineItemNames(List<? extends ItemInfo> items) {
         var fileName = items.get(0).getName();
         for (int j = 0; j < items.size(); j++) {
-            items.get(j).setResultName(j == 0 ? fileName : fileName + " (%d)".formatted(j));
+            ItemInfo itemInfo = items.get(j);
+            itemInfo.setResultName(j == 0 ?
+                                   fileName :
+                                   "%s (%d)%s".formatted(itemInfo.getBasename(), j, itemInfo.getExtension()));
         }
     }
 

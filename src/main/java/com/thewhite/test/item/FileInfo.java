@@ -2,7 +2,6 @@ package com.thewhite.test.item;
 
 import com.thewhite.test.util.Util;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -11,21 +10,17 @@ import java.util.regex.Pattern;
 import static com.thewhite.test.util.Util.compareContent;
 
 @Getter
-public final class FileInfo implements ItemInfo, Comparable<FileInfo> {
+public final class FileInfo extends ItemInfo implements Comparable<FileInfo> {
 
     private static final Pattern sizePattern = Pattern.compile("\\d+");
 
     private final File file;
-    private final String name;
     private final int size;
     private final DirNameInfo dirNameInfo;
 
-    @Setter
-    private String resultName;
-
     public FileInfo(File file, boolean rootDir) {
+        super(file.getName());
         this.file = file;
-        this.name = Util.getNameWithoutUUID(file.getName());
         this.size = getFileSize(file);
 
         var dirName = file.getParentFile().getName();

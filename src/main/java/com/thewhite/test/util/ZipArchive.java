@@ -24,9 +24,11 @@ public class ZipArchive implements AutoCloseable {
 
     @SneakyThrows
     public void addDir(DirInfo dir) {
-        zipOut.putNextEntry(new ZipEntry(dir.getResultName() +
-                                         FileSystems.getDefault().getSeparator()));
-        zipOut.closeEntry();
+        if (!dir.getResultName().equals("")) {
+            zipOut.putNextEntry(new ZipEntry(dir.getResultName() +
+                                             FileSystems.getDefault().getSeparator()));
+            zipOut.closeEntry();
+        }
 
         for (FileInfo fileInfo : dir.getFiles()) {
             addFile(dir.getResultName(), fileInfo);
@@ -35,9 +37,11 @@ public class ZipArchive implements AutoCloseable {
 
     @SneakyThrows
     public void addFile(String dirName, FileInfo file) {
-        zipOut.putNextEntry(new ZipEntry(dirName +
-                                         FileSystems.getDefault().getSeparator() +
-                                         file.getResultName()));
+        var name = dirName.equals("") ?
+                   file.getResultName() :
+                   dirName + FileSystems.getDefault().getSeparator() + file.getResultName();
+
+        zipOut.putNextEntry(new ZipEntry(name));
         copy(file.getFile());
         zipOut.closeEntry();
     }
